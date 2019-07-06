@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>anz</groupId>
-	<artifactId>assessment</artifactId>
+	<artifactId>anz-assessment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ANZ Assessment</name>
 	<description>ANZ Assessment</description>
@@ -204,10 +204,10 @@
 	</pluginRepositories>
 
 	<scm>
-		<connection>scm:git:https://gitlab.devops.easy2easiest.com/fasteasy-appservices/bizloanorigination.git</connection>
-		<developerConnection>scm:git:https://gitlab.devops.easy2easiest.com/fasteasy-appservices/bizloanorigination.git</developerConnection>
-		<url>scm:git:https://gitlab.devops.easy2easiest.com/fasteasy-appservices/bizloanorigination.git</url>
-		<tag>bizloanorigination-2.6.6.0-SNAPSHOT</tag>
+		<connection>scm:git:https://github.com/alicialim/anz-assessment.git</connection>
+		<developerConnection>scm:git:https://github.com/alicialim/anz-assessment.git</developerConnection>
+		<url>scm:git:https://github.com/alicialim/anz-assessment.git</url>
+		<tag>anz-assessment-0.0.1-SNAPSHOT</tag>
 	</scm>
 
 </project>
