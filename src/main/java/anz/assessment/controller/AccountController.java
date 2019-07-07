@@ -1,6 +1,7 @@
 package anz.assessment.controller;
 
 import anz.assessment.model.response.Accounts;
+import anz.assessment.model.response.Transactions;
 import anz.assessment.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,24 @@ public class AccountController {
     ) {
         return new ResponseEntity<>(
                 accountService.getListOfAccounts(userId),
+                httpHeaders,
+                HttpStatus.OK
+        );
+    }
+
+    /**
+     * An endpoint to get an account's list of transactions
+     *
+     * @param userId  User ID
+     * @return JSON
+     */
+    @GetMapping(value = "/v1/account/transactions", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Transactions> getListOfTransactions(
+            @RequestHeader String userId,
+            @RequestHeader String accountNumber
+    ) {
+        return new ResponseEntity<>(
+                accountService.getListOfTransactions(accountNumber),
                 httpHeaders,
                 HttpStatus.OK
         );
