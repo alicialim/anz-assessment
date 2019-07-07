@@ -4,7 +4,7 @@ import anz.assessment.exception.BusinessRuleException;
 import anz.assessment.exception.error.BusinessRuleError;
 import anz.assessment.model.Account;
 import anz.assessment.model.response.Accounts;
-import anz.assessment.repository.AccountRepository;
+import anz.assessment.repository.AccountsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class AccountService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountsRepository accountsRepository;
 
     /**
      * Gets user's list of accounts by userId
@@ -25,8 +25,8 @@ public class AccountService {
      * @return List of account(s)
      */
     public Accounts getListOfAccounts(String userId) {
-        Optional<List<Account>> optionalAccountList = accountRepository.findAccountsByUserId(userId);
-        if (!optionalAccountList.isPresent()) {
+        Optional<List<Account>> optionalAccountList = accountsRepository.findAccountsByUserId(userId);
+        if (!optionalAccountList.isPresent() || optionalAccountList.get().isEmpty()) {
             throw new BusinessRuleException(BusinessRuleError.NO_BANK_ACCOUNT, "No accounts found for this user in the database.");
         }
 

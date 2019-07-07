@@ -18,7 +18,7 @@ import static anz.assessment.config.CommonConstants.SINGLE_BLANK_SPACE;
 
 @Repository
 @Slf4j
-public class AccountRepository {
+public class AccountsRepository {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -30,10 +30,10 @@ public class AccountRepository {
         try {
             final String sql = new StringJoiner(SINGLE_BLANK_SPACE)
                     .add("SELECT " + getAllFieldsWithoutUserId())
-                    .add("FROM account")
+                    .add("FROM accounts")
                     .add("WHERE user_id = :userId")
                     .toString();
-            return Optional.of(namedParameterJdbcTemplate.query(sql, namedParameters, new AccountMapper()));
+            return Optional.ofNullable(namedParameterJdbcTemplate.query(sql, namedParameters, new AccountMapper()));
         } catch (EmptyResultDataAccessException ex) {
             return Optional.empty();
         }
@@ -41,8 +41,8 @@ public class AccountRepository {
 
     private String getAllFieldsWithoutUserId() {
         return new StringJoiner(COMMA_SEPARATED_VALUE)
-                .add("number")
-                .add("name")
+                .add("account_number")
+                .add("account_name")
                 .add("type")
                 .add("balance")
                 .add("currency")

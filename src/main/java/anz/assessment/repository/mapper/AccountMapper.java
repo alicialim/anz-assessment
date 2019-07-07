@@ -15,8 +15,8 @@ public class AccountMapper implements RowMapper<Account> {
     @Override
     public Account mapRow(ResultSet resultSet, int i) throws SQLException {
         Account account = new Account();
-        account.setAccountNumber(resultSet.getString("number"));
-        account.setAccountName(resultSet.getString("name"));
+        account.setAccountNumber(resultSet.getString("account_number"));
+        account.setAccountName(resultSet.getString("account_name"));
         account.setAccountType(resultSet.getString("type"));
 
         DateFormat dateFormatter = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
