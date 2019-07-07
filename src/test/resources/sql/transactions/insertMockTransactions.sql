@@ -1,7 +1,7 @@
 INSERT INTO `transactions` (`uuid`, `account_number`, `debit_flag`, `currency`, `amount`, `status`, `create_datetime`, `notes`)
 VALUES
 ('108F5087-17B7-4B4B-88D4-3D60EA082516', '123-2223-212', b'1', 'AUD', 2342.62, b'1', NOW(), 'Bought laptop.'),
-('2D102034-E20F-4CBC-A2D8-8B6AEF8064D2', '123-2223-212', b'1', 'AUD', 241.32, b'1', NOW(), 'Bought shoes.'),
+('2D102034-E20F-4CBC-A2D8-8B6AEF8064D2', '123-2223-212', b'0', 'AUD', 241.32, b'1', NOW(), 'Earnings from selling cookies.'),
 ('7EE47EE6-2C7F-44CB-AC95-631BB3A93A16', '987-8678-545', b'0', 'SGD', 675.52, b'1', NOW(), 'Earnings from project.'),
 ('88a86475-3dd9-4657-8522-13d81a42cd59', '123-2223-212', b'1', 'AUD', 1634.70, b'1', NOW(), NULL),
 ('8ede7505-13f2-47b2-a38b-6bc83ea41652', '987-8678-545', b'0', 'SGD', 637.62, b'1', NOW(), 'Reimbursement for faulty phone.'),
