@@ -23,7 +23,7 @@ public class TransactionsRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public Optional<List<Transaction>> findTransactionsByAccountNumber(String accountNumber){
+    public Optional<List<Transaction>> findTransactionsByAccountNumber(String accountNumber) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("accountNumber", accountNumber);
 

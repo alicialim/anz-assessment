@@ -1,5 +1,7 @@
 package anz.assessment.controller;
 
+import anz.assessment.model.Account;
+import anz.assessment.model.response.AccountAdded;
 import anz.assessment.model.response.Accounts;
 import anz.assessment.model.response.Transactions;
 import anz.assessment.service.AccountService;
@@ -11,7 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -54,6 +60,25 @@ public class AccountController {
     ) {
         return new ResponseEntity<>(
                 accountService.getListOfTransactions(accountNumber),
+                httpHeaders,
+                HttpStatus.OK
+        );
+    }
+
+    /**
+     * An endpoint to add an account for the user
+     *
+     * @param userId  User ID
+     * @param account  New account to be added for user
+     * @return JSON
+     */
+    @PostMapping(value = "/v1/account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<AccountAdded> addNewAccount(
+            @RequestHeader String userId,
+            @RequestBody @Valid Account account
+    ) {
+        return new ResponseEntity<>(
+                accountService.addNewAccount(userId, account),
                 httpHeaders,
                 HttpStatus.OK
         );
