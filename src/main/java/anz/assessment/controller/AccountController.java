@@ -44,6 +44,7 @@ public class AccountController {
      * An endpoint to get an account's list of transactions
      *
      * @param userId  User ID
+     * @param accountNumber  Account number in which the transactions the user expects to see
      * @return JSON
      */
     @GetMapping(value = "/v1/account/transactions", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
