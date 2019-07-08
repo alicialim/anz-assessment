@@ -4,6 +4,7 @@ import anz.assessment.exception.BusinessRuleException;
 import anz.assessment.exception.error.BusinessRuleError;
 import anz.assessment.model.Account;
 import anz.assessment.model.Transaction;
+import anz.assessment.model.response.AccountAdded;
 import anz.assessment.model.response.Accounts;
 import anz.assessment.model.response.Transactions;
 import anz.assessment.repository.AccountsRepository;
@@ -12,8 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static anz.assessment.config.CommonConstants.*;
 
 @Service
 @Slf4j
@@ -48,10 +56,8 @@ public class AccountService {
      */
     public Transactions getListOfTransactions(String accountNumber) {
 
-        String accountRegex = "^([\\d+]{3}\\-)([\\d]{4}\\-)([\\d]{3})$";
-
-        if (!accountNumber.matches(accountRegex)) {
-            throw new BusinessRuleException(BusinessRuleError.INVALID_ACCOUNT_NO, "Invalid account number. Unable to obtain transactions for this acccount.");
+        if (!accountNumber.matches(ACCOUNT_NUMBER_REGEX)) {
+            throw new BusinessRuleException(BusinessRuleError.INVALID_ACCOUNT_NO, "Invalid account number. Unable to obtain transactions for this account.");
         }
 
         Optional<List<Transaction>> optionalTransactionList = transactionsRepository.findTransactionsByAccountNumber(accountNumber);
@@ -64,5 +70,43 @@ public class AccountService {
         transactions.setTransactions(optionalTransactionList.get());
 
         return transactions;
+    }
+
+    /**
+     * Adds a new account for the user
+     * @param account
+     * @return Details of account added
+     */
+    public AccountAdded addNewAccount(String userId, Account account) {
+
+        String accountNumber = account.getAccountNumber();
+
+        if (!accountNumber.matches(ACCOUNT_NUMBER_REGEX)) {
+            throw new BusinessRuleException(BusinessRuleError.INVALID_ACCOUNT_NO, "Invalid account number. Unable to add account into the database.");
+        }
+
+        Optional<Account> optionalAccount = accountsRepository.findAccountsByAccountNumber(accountNumber);
+
+        if (optionalAccount.isPresent()) {
+            throw new BusinessRuleException(BusinessRuleError.DUPLICATED_ACCOUNT, "Account already exists in the database.");
+        }
+
+        Date currentDateTime = new Date();
+        DateFormat defaultSqlDateFormatter = new SimpleDateFormat(DEFAULT_SQL_DATETIME_FORMAT);
+        String createdDatetime = defaultSqlDateFormatter.format(currentDateTime);
+        int result = accountsRepository.addAccount(userId, account, createdDatetime);
+
+        if (result == 0) {
+            throw new BusinessRuleException(BusinessRuleError.DATABASE_TRANSACTION_ERROR, "Failed to add the new account into the database.");
+        }
+
+        DateFormat defaultDateFormatter = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        account.setBalanceDate(defaultDateFormatter.format(currentDateTime));
+
+        account.setCreatedDate(createdDatetime);
+
+        AccountAdded accountAdded = new AccountAdded();
+        accountAdded.setAccountAdded(account);
+        return accountAdded;
     }
 }

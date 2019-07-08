@@ -1,0 +1,9 @@
+{
+  "accountNumber": "999-9999-999",
+  "accountName": "AUD Current 999",
+  "accountType": "CURRENT",
+  "balanceDate": null,
+  "currency": "AUD",
+  "balance": 1000.62,
+  "createdDate": null
+}
